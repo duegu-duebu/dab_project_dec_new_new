@@ -4,8 +4,7 @@ cachetools==6.2.2
 certifi==2025.11.12
 charset-normalizer==3.4.4
 comm==0.2.3
-dab_project_dec @ file:///Users/saurabh/Desktop/databricks_asset_bundles/dab_project_dec/dist/dab_project_dec-0.0.1-py3-none-any.whl#sha256=a88c60b5c93d381ba2077a27cd5224840489d002f07d35025b399ba11936a7b5
-databricks-connect==15.4.0
+-e .
 databricks-sdk==0.74.0
 debugpy==1.8.17
 decorator==5.2.1
