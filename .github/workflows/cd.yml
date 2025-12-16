@@ -47,7 +47,7 @@ jobs:
         name: Deploy to Prod
         needs: cd-deploy-test
         runs-on: ubuntu-latest
-        environment: produ
+        environment: prod
         steps:
             - name: Checkout Code
               uses: actions/checkout@v6
