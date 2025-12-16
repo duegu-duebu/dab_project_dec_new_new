@@ -42,8 +42,10 @@ targets:
       # We explicitly deploy to /Workspace/Users/dueguduebu_gmail.com#ext#@dueguduebugmail.onmicrosoft.com to make sure we only have a single copy.
       root_path: /Workspace/Shared/${bundle.name}/${bundle.target}
     permissions:
-      - user_name: dueguduebu_gmail.com#ext#@dueguduebugmail.onmicrosoft.com
+      - service_principal_name: a80d5d25-c80c-46f2-bca9-1d28a876f945
         level: CAN_MANAGE
+    run_as:
+      service_principal_name: a80d5d25-c80c-46f2-bca9-1d28a876f945
 
   prod:
     mode: production
@@ -55,5 +57,7 @@ targets:
       # We explicitly deploy to /Workspace/Users/dueguduebu_gmail.com#ext#@dueguduebugmail.onmicrosoft.com to make sure we only have a single copy.
       root_path: /Workspace/Shared/.bundle/${bundle.name}/${bundle.target}
     permissions:
-      - user_name: dueguduebu_gmail.com#ext#@dueguduebugmail.onmicrosoft.com
+      - service_principal_name: e8a4c5b1-66bd-44f2-93c3-40a5d9e6c43b
         level: CAN_MANAGE
+    run_as:
+      service_principal_name: e8a4c5b1-66bd-44f2-93c3-40a5d9e6c43b
