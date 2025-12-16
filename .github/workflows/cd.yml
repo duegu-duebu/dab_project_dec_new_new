@@ -39,7 +39,9 @@ jobs:
 
             - name: Deploy to test
               run: |
-                databricks bundle deploy --target test --profile TEST
+                databricks bundle deploy \
+                    --target test \
+                    --profile TEST
 
     cd-deploy-prod:
         name: Deploy to Prod
@@ -75,5 +77,7 @@ jobs:
 
             - name: Deploy to prod
               run: |
-                databricks bundle deploy --target prod --profile PROD
+                databricks bundle deploy \
+                    --target prod \
+                    --profile PROD
 
