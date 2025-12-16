@@ -1,0 +1,81 @@
+name: CD Workflow
+
+on:
+    push:
+        branches:
+            - 'main'
+
+jobs:
+    cd-deploy-test:
+        name: Deploy to Test
+        runs-on: ubuntu-latest
+        environment: test
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v6
+        
+            - name: Setup Python 3.11
+              uses: actions/setup-python@v6
+              with:
+                python-version: 3.11
+
+            - name: Install Databricks CLI
+              run: |
+                brew tap databricks/tap
+                brew install databricks
+
+            - name: Install Dependencies
+              run: |
+                pip install --upgrade pip
+                pip install setuptools wheel
+
+            - name: Configure Databricks
+              run: |
+                cat <<EOF > ~/.databrickscfg
+                [TEST]
+                host = https://adb-1668767633753449.9.azuredatabricks.net/
+                azure_tenant_id = ${{ secrets.AZURE_TENANT_ID }}
+                azure_client_id = ${{ secrets.AZURE_CLIENT_ID }}
+                azure_client_secret = ${{ secrets.AZURE_CLIENT_SECRET }} 
+
+            - name: Deploy to test
+              run: |
+                databricks bundle deploy --target test --profile TEST
+
+    cd-deploy-prod:
+        name: Deploy to Prod
+        needs: cd-deploy-test
+        runs-on: ubuntu-latest
+        environment: produ
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v6
+        
+            - name: Setup Python 3.11
+              uses: actions/setup-python@v6
+              with:
+                python-version: 3.11
+
+            - name: Install Databricks CLI
+              run: |
+                brew tap databricks/tap
+                brew install databricks
+
+            - name: Install Dependencies
+              run: |
+                pip install --upgrade pip
+                pip install setuptools wheel
+
+            - name: Configure Databricks
+              run: |
+                cat <<EOF > ~/.databrickscfg
+                [PROD]
+                host = https://adb-556792786288124.4.azuredatabricks.net/
+                azure_tenant_id = ${{ secrets.AZURE_TENANT_ID }}
+                azure_client_id = ${{ secrets.AZURE_CLIENT_ID }}
+                azure_client_secret = ${{ secrets.AZURE_CLIENT_SECRET }} 
+
+            - name: Deploy to prod
+              run: |
+                databricks bundle deploy --target prod --profile PROD
+
